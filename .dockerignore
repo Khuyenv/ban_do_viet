@@ -1,0 +1,19 @@
+# ===================================================
+# File .dockerignore — Bỏ qua file thừa khi build Docker
+# ===================================================
+
+# Bỏ qua thư mục build Maven cũ (sẽ được build lại trong container)
+target/
+
+# Bỏ qua IDE và OS files
+.idea/
+*.iml
+.DS_Store
+Thumbs.db
+
+# Git
+.git/
+.gitignore
+
+# Logs
+*.log
