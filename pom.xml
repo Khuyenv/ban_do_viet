@@ -11,6 +11,7 @@
     <groupId>com.example</groupId>
     <artifactId>ban_do_viet</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+    <packaging>war</packaging>
     <name>ban_do_viet</name>
     <description>ban_do_viet</description>
     <url/>

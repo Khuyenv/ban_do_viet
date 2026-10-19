@@ -27,11 +27,11 @@ FROM eclipse-temurin:17-jre-alpine
 
 WORKDIR /app
 
-# Copy JAR đã build từ stage 1
-COPY --from=builder /app/target/*.jar app.jar
+# Copy WAR đã build từ stage 1 (JSP hoạt động đúng trong WAR)
+COPY --from=builder /app/target/*.war app.war
 
 # Expose port
 EXPOSE 8080
 
-# Khởi chạy ứng dụng Spring Boot
-ENTRYPOINT ["java", "-jar", "app.jar"]
+# Khởi chạy ứng dụng Spring Boot (Executable WAR)
+ENTRYPOINT ["java", "-jar", "app.war"]
