@@ -1,24 +1,22 @@
 # Dockerfile cho dự án "Bản Đồ Tết Việt" (Đề Tài C05)
-# Sử dụng multi-stage build để tối ưu kích thước image
+# Dùng image Maven chính thức (đã có sẵn Maven, không cần tải thêm)
 
 # ============================
-# STAGE 1: Build JAR với Maven
+# STAGE 1: Build WAR với Maven
 # ============================
-FROM eclipse-temurin:17-jdk-alpine AS builder
+FROM maven:3.9.6-eclipse-temurin-17-alpine AS builder
 
 WORKDIR /app
 
 # Copy file cấu hình Maven trước (tối ưu cache layer)
-COPY mvnw .
-COPY .mvn .mvn
 COPY pom.xml .
 
-# Download dependencies (cache lại nếu pom.xml không đổi)
-RUN chmod +x mvnw && ./mvnw dependency:go-offline -B
+# Download dependencies trước (cache layer riêng để build nhanh hơn)
+RUN mvn dependency:go-offline -B
 
-# Copy toàn bộ mã nguồn và build
+# Copy toàn bộ mã nguồn và build WAR
 COPY src src
-RUN ./mvnw package -DskipTests -B
+RUN mvn package -DskipTests -B
 
 # ============================
 # STAGE 2: Runtime Image nhẹ
